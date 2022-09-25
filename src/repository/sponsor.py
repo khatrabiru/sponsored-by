@@ -1,19 +1,23 @@
 from sqlalchemy.orm import Session
 from .. import models, schemas
-from fastapi import HTTPException,status
+from fastapi import HTTPException, status
+
 
 def get_all(db: Session):
     sponsors = db.query(models.Sponsor).all()
     return sponsors
 
-def create(request: schemas.Blog,db: Session):
-    new_sponsor = models.Sponsor(title=request.title, body=request.body,user_id=1)
+
+def create(request: schemas.Blog, db: Session):
+    new_sponsor = models.Sponsor(
+        title=request.title, body=request.body, user_id=1)
     db.add(new_sponsor)
     db.commit()
     db.refresh(new_sponsor)
     return new_sponsor
 
-def destroy(id:int,db: Session):
+
+def destroy(id: int, db: Session):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
 
     if not sponsor.first():
@@ -24,7 +28,8 @@ def destroy(id:int,db: Session):
     db.commit()
     return 'done'
 
-def update(id:int,request:schemas.Blog, db:Session):
+
+def update(id: int, request: schemas.Blog, db: Session):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
 
     if not sponsor.first():
@@ -35,7 +40,8 @@ def update(id:int,request:schemas.Blog, db:Session):
     db.commit()
     return 'updated'
 
-def show(id:int,db:Session):
+
+def show(id: int, db: Session):
     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id).first()
     if not sponsor:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

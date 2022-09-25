@@ -15,7 +15,6 @@ class Event(Base):
     location = Column(String)
     date = Column(Date)
     sponsors = List
-    
 
 
 class Sponsor(Base):

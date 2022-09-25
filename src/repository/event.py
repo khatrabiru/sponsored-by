@@ -1,19 +1,22 @@
 from sqlalchemy.orm import Session
 from .. import models, schemas
-from fastapi import HTTPException,status
+from fastapi import HTTPException, status
+
 
 def get_all(db: Session):
     events = db.query(models.Event).all()
     return events
 
-def create(request: schemas.Blog,db: Session):
-    new_event = models.Event(title=request.title, body=request.body,user_id=1)
+
+def create(request: schemas.Blog, db: Session):
+    new_event = models.Event(title=request.title, body=request.body, user_id=1)
     db.add(new_event)
     db.commit()
     db.refresh(new_event)
     return new_event
 
-def destroy(id:int,db: Session):
+
+def destroy(id: int, db: Session):
     event = db.query(models.Event).filter(models.Event.id == id)
 
     if not event.first():
@@ -24,7 +27,8 @@ def destroy(id:int,db: Session):
     db.commit()
     return 'done'
 
-def update(id:int,request:schemas.Blog, db:Session):
+
+def update(id: int, request: schemas.Blog, db: Session):
     event = db.query(models.Event).filter(models.Event.id == id)
 
     if not event.first():
@@ -35,7 +39,8 @@ def update(id:int,request:schemas.Blog, db:Session):
     db.commit()
     return 'updated'
 
-def show(id:int,db:Session):
+
+def show(id: int, db: Session):
     event = db.query(models.Event).filter(models.Event.id == id).first()
     if not event:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
