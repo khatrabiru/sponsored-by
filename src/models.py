@@ -11,9 +11,11 @@ class Event(Base):
     image_url = Column(String)
     description = Column(String)
     short_description = Column(String)
+    organized_by = Column(String)
     location = Column(String)
     date = Column(Date)
     sponsors = List
+    
 
 
 class Sponsor(Base):
