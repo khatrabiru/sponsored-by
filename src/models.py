@@ -14,7 +14,6 @@ class Event(Base):
     organized_by = Column(String)
     location = Column(String)
     date = Column(Date)
-    sponsors = List
 
 
 class Sponsor(Base):
@@ -22,11 +21,11 @@ class Sponsor(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    image_url = Column(String)
-    description = Column(String)
-    short_description = Column(String)
-    headquarter_location = Column(String)
-    website_url = Column(String)
-    facebook_url = Column(String)
-    twitter_url = Column(String)
-    instagram_url = Column(String)
+    # image_url = Column(String)
+    # description = Column(String)
+    # short_description = Column(String)
+    # headquarter_location = Column(String)
+    # website_url = Column(String)
+    # facebook_url = Column(String)
+    # twitter_url = Column(String)
+    # instagram_url = Column(String)
