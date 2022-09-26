@@ -1,4 +1,6 @@
+from sqlite3 import Date
 from pydantic import BaseModel
+
 
 class Sponsor(BaseModel):
     name: str
@@ -10,5 +12,13 @@ class Sponsor(BaseModel):
     facebook_url: str
     twitter_url: str
     instagram_url: str
-    class Config():
-        orm_mode = True
+
+
+class Event(BaseModel):
+    name: str
+    image_url: str
+    description: str
+    short_description: str
+    organized_by: str
+    location: str
+    date: Date
