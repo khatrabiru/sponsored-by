@@ -9,7 +9,17 @@ def get_all(db: Session):
 
 
 def create(request: schemas.Sponsor, db: Session):
-    new_sponsor = models.Sponsor(name = request.name)
+    new_sponsor = models.Sponsor(
+        name = request.name,
+        image_url = request.image_url,
+        description = request.description,
+        short_description = request.short_description,
+        headquarter_location = request.headquarter_location,
+        website_url = request.website_url,
+        facebook_url = request.facebook_url,
+        twitter_url = request.twitter_url,
+        instagram_url = request.instagram_url)
+        
     db.add(new_sponsor)
     db.commit()
     db.refresh(new_sponsor)
