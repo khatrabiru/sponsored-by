@@ -10,3 +10,5 @@ class Sponsor(BaseModel):
     facebook_url: str
     twitter_url: str
     instagram_url: str
+    class Config():
+        orm_mode = True

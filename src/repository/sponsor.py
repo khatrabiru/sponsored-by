@@ -10,44 +10,43 @@ def get_all(db: Session):
 
 def create(request: schemas.Sponsor, db: Session):
     new_sponsor = models.Sponsor(
-        name = request.name,
-        image_url = request.image_url,
-        description = request.description,
-        short_description = request.short_description,
-        headquarter_location = request.headquarter_location,
-        website_url = request.website_url,
-        facebook_url = request.facebook_url,
-        twitter_url = request.twitter_url,
-        instagram_url = request.instagram_url)
-        
+        name=request.name,
+        image_url=request.image_url,
+        description=request.description,
+        short_description=request.short_description,
+        headquarter_location=request.headquarter_location,
+        website_url=request.website_url,
+        facebook_url=request.facebook_url,
+        twitter_url=request.twitter_url,
+        instagram_url=request.instagram_url)
     db.add(new_sponsor)
     db.commit()
     db.refresh(new_sponsor)
     return new_sponsor
 
 
-# def destroy(id: int, db: Session):
-#     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
+def delete(id: int, db: Session):
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
 
-#     if not sponsor.first():
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-#                             detail=f"Event with id {id} not found")
+    if not sponsor.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Event with id {id} not found")
 
-#     sponsor.delete(synchronize_session=False)
-#     db.commit()
-#     return 'done'
+    sponsor.delete(synchronize_session=False)
+    db.commit()
+    return 'done'
 
 
-# def update(id: int, request: schemas.Blog, db: Session):
-#     sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
+def update(id: int, request: schemas.Sponsor, db: Session):
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
 
-#     if not sponsor.first():
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-#                             detail=f"Sponsor with id {id} not found")
+    if not sponsor.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Sponsor with id {id} not found")
 
-#     sponsor.update(request)
-#     db.commit()
-#     return 'updated'
+    sponsor.update(request.__dict__)
+    db.commit()
+    return 'updated'
 
 
 def get(id: int, db: Session):
