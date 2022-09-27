@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from src import database, schemas, models
+from src import database, schemas
 from sqlalchemy.orm import Session
 from src.repository import event
 

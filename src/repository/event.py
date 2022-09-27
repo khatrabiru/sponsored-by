@@ -1,7 +1,5 @@
-import re
+from unicodedata import category
 from sqlalchemy.orm import Session
-
-from src.router import sponsor
 from .. import models, schemas
 from fastapi import HTTPException, status
 

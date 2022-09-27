@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, ARRAY
-from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy import Column, Integer, String, Date, ARRAY
 from .database import Base
 
 
@@ -15,7 +14,7 @@ class Event(Base):
     location = Column(String)
     category = Column(String)
     date = Column(Date)
-    sponsors = Column(MutableList.as_mutable(ARRAY(String)))
+    sponsors = Column(ARRAY(String))
 
 
 class Sponsor(Base):
@@ -31,3 +30,4 @@ class Sponsor(Base):
     facebook_url = Column(String)
     twitter_url = Column(String)
     instagram_url = Column(String)
+    events = Column(ARRAY(String))

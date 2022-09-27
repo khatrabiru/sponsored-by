@@ -18,7 +18,8 @@ def create(request: schemas.Sponsor, db: Session):
         website_url=request.website_url,
         facebook_url=request.facebook_url,
         twitter_url=request.twitter_url,
-        instagram_url=request.instagram_url)
+        instagram_url=request.instagram_url,
+        events=request.events)
     db.add(new_sponsor)
     db.commit()
     db.refresh(new_sponsor)
