@@ -1,4 +1,7 @@
+import re
 from sqlalchemy.orm import Session
+
+from src.router import sponsor
 from .. import models, schemas
 from fastapi import HTTPException, status
 
@@ -16,7 +19,9 @@ def create(request: schemas.Event, db: Session):
         short_description=request.short_description,
         organized_by=request.organized_by,
         location=request.location,
-        date=request.date)
+        category=request.category,
+        date=request.date,
+        sponsors=request.sponsors)
     db.add(new_event)
     db.commit()
     db.refresh(new_event)

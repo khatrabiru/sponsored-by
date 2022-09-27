@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, ARRAY
+from sqlalchemy.ext.mutable import MutableList
 from .database import Base
-from sqlalchemy.orm import relationship
 
 
 class Event(Base):
@@ -13,7 +13,9 @@ class Event(Base):
     short_description = Column(String)
     organized_by = Column(String)
     location = Column(String)
+    category = Column(String)
     date = Column(Date)
+    sponsors = Column(MutableList.as_mutable(ARRAY(String)))
 
 
 class Sponsor(Base):

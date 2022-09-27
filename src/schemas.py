@@ -1,4 +1,5 @@
 from sqlite3 import Date
+from typing import List
 from pydantic import BaseModel
 
 
@@ -21,4 +22,6 @@ class Event(BaseModel):
     short_description: str
     organized_by: str
     location: str
+    category: str
     date: Date
+    sponsors: list

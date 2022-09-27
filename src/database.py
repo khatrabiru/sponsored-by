@@ -2,10 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHAMY_DATABASE_URL = 'sqlite:///./sponsoredby.db'
-
-engine = create_engine(SQLALCHAMY_DATABASE_URL, connect_args={
-                       "check_same_thread": False})
+DATABASE = 'postgresql'
+USER = 'postgres'
+PASSWORD = 'Kesharitek1..'
+HOST = 'localhost'
+PORT = '5432'
+DB_NAME = 'sponsoredby'
+engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME }')
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False,)
 
