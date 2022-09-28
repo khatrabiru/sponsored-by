@@ -14,7 +14,7 @@ class Event(Base):
     location = Column(String)
     category = Column(String)
     date = Column(Date)
-    sponsors = Column(ARRAY(String))
+    sponsors = Column(ARRAY(Integer))
 
 
 class Sponsor(Base):
@@ -30,4 +30,4 @@ class Sponsor(Base):
     facebook_url = Column(String)
     twitter_url = Column(String)
     instagram_url = Column(String)
-    events = Column(ARRAY(String))
+    events = Column(ARRAY(Integer))
