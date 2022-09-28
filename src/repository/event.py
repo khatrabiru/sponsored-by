@@ -59,7 +59,12 @@ def update(id: int, request: schemas.Event, db: Session):
     newSponsors = request.__dict__["sponsors"]
 
     toBeDeletedSopnsors = [x for x in oldSponsors if x not in newSponsors]
+    for item in toBeDeletedSopnsors:
+        sponsor.delete_event(item, id, db)
+
     toBeAddeddSopnsors = [x for x in newSponsors if x not in oldSponsors]
+    for item in toBeAddeddSopnsors:
+        sponsor.add_event(item, id, db)
 
     event.update(request.__dict__)
     db.commit()
