@@ -34,3 +34,9 @@ def get(id: int, db: Session = Depends(get_db)):
 @router.get('/')
 def all(db: Session = Depends(get_db)):
     return sponsor.get_all(db)
+
+
+@router.get('/details/{id}', status_code=200)
+def get_sponsor_detail(id: int, db: Session = Depends(get_db)):
+    # TODO(Find basic details of evenyts and attached to Json)
+    return sponsor.get(id, db)
