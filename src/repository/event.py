@@ -20,6 +20,7 @@ def create(request: schemas.Event, db: Session):
         category=request.category,
         date=request.date,
         sponsors=request.sponsors)
+
     db.add(new_event)
     db.commit()
     db.refresh(new_event)
@@ -27,7 +28,8 @@ def create(request: schemas.Event, db: Session):
     sponsors = request.__dict__["sponsors"]
     for item in sponsors:
         sponsor.add_event(item, new_event.id, db)
-    return new_event
+
+    return "created"
 
 
 def delete(id: int, db: Session):
@@ -36,6 +38,10 @@ def delete(id: int, db: Session):
     if not event.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Event with id {id} not found")
+
+    sponsors = event.first().__dict__["sponsors"]
+    for item in sponsors:
+        sponsor.delete_event(item, id, db)
 
     event.delete(synchronize_session=False)
     db.commit()

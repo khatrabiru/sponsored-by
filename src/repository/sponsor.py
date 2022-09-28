@@ -71,4 +71,12 @@ def add_event(id: int, event_id: int, db: Session):
 
 
 def delete_event(id: int, event_id: int, db: Session):
-    pass
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
+    if not sponsor.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Sponsor with id {id} not found")
+
+    sponsors = sponsor.first().events
+    sponsors.remove(event_id)
+    sponsor.update({"events": sponsors})
+    db.commit()
