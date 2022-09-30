@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from src import schemas, database
+from app import schemas, database
 from sqlalchemy.orm import Session
-from src.repository import sponsor
+from app.repository import sponsor
 
 router = APIRouter(
     prefix="/sponsor",

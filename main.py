@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from src.router import sponsor, event
-from src.database import engine
-from src import models
+from app.router import sponsor, event
+from app.database import engine
+from app import models
 
 app = FastAPI()
 app.include_router(event.router)
