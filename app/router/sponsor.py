@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from app import schemas, database
 from sqlalchemy.orm import Session
 from app.repository import sponsor
@@ -11,22 +11,22 @@ router = APIRouter(
 get_db = database.get_db
 
 
-@router.post('/')
+@router.post('/', status_code=status.HTTP_201_CREATED)
 def create(request: schemas.Sponsor, db: Session = Depends(get_db)):
     return sponsor.create(request, db)
 
 
-@router.delete('/{id}')
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete(id: int, db: Session = Depends(get_db)):
     return sponsor.delete(id, db)
 
 
-@router.put('/{id}')
+@router.put('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def update(id: int, request: schemas.Sponsor, db: Session = Depends(get_db)):
     return sponsor.update(id, request, db)
 
 
-@router.get('/{id}', status_code=200)
+@router.get('/{id}', status_code=status.HTTP_200_OK)
 def get(id: int, db: Session = Depends(get_db)):
     return sponsor.get(id, db)
 
@@ -34,9 +34,3 @@ def get(id: int, db: Session = Depends(get_db)):
 @router.get('/')
 def all(db: Session = Depends(get_db)):
     return sponsor.get_all(db)
-
-
-@router.get('/details/{id}', status_code=200)
-def get_sponsor_detail(id: int, db: Session = Depends(get_db)):
-    # TODO(Find basic details of evenyts and attached to Json)
-    return sponsor.get(id, db)

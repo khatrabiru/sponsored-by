@@ -7,3 +7,4 @@ pytest
 requests
 pytest-asyncio
 httpx
+autopep8

@@ -1,4 +1,5 @@
 from curses.ascii import NUL
+from email.mime import base
 from pickle import NONE
 import re
 from urllib import response
@@ -121,3 +122,52 @@ async def test_update_event():
     assert response1.json()['id'] == response3.json()['id']
     assert response1.json()['sponsors'] != response3.json()['sponsors']
     assert len(response1.json()['sponsors']) == len(response3.json()['sponsors'])
+
+
+@pytest.mark.asyncio
+async def test_create_sposor():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        payload = {
+                "name": "Sponsor1",
+                "image_url": "string",
+                "description": "string",
+                "short_description": "string",
+                "headquarter_location": "string",
+                "website_url": "string",
+                "facebook_url": "string",
+                "twitter_url": "string",
+                "instagram_url": "string",
+                "events": [
+                ]
+            }
+        response = await ac.post("/sponsor/", json=payload)
+
+    assert response.status_code == 201
+    assert response.json()['name'] == 'Sponsor1'
+    assert 'events' in response.json()
+
+
+@pytest.mark.asyncio
+async def test_get_sponsor():
+    async with AsyncClient(app=app, base_url = "http://test") as ac:
+        payload = {
+                "name": "Sponsor1",
+                "image_url": "string",
+                "description": "string",
+                "short_description": "string",
+                "headquarter_location": "string",
+                "website_url": "string",
+                "facebook_url": "string",
+                "twitter_url": "string",
+                "instagram_url": "string",
+                "events": [
+                ]
+            }
+        response1 = await ac.post('/sponsor/', json=payload)
+        id = response1.json()['id']
+        response2 = await ac.get(f'/sponsor/{id}')
+    
+    assert response1.status_code == 201
+    assert response2.status_code == 200
+    assert 'name' in response2.json()
+    assert response2.json()['name'] == 'Sponsor1'
