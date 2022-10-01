@@ -25,9 +25,9 @@ def create(request: schemas.Event, db: Session):
     db.commit()
     
 
-    sponsors = request.__dict__["sponsors"]
-    for item in sponsors:
-        add_event(item, new_event.id, db)
+    # sponsors = request.__dict__["sponsors"]
+    # for item in sponsors:
+    #     add_event(item, new_event.id, db)
 
     db.refresh(new_event)
     return new_event
@@ -40,11 +40,12 @@ def delete(id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Event with id {id} not found")
 
-    sponsors = event.first().__dict__["sponsors"]
-    for item in sponsors:
-        delete_event(item, id, db)
+    # sponsors = event.first().__dict__["sponsors"]
+    # for item in sponsors:
+    #     delete_event(item, id, db)
 
     event.delete(synchronize_session=False)
+    db.commit()
     return 'done'
 
 
@@ -58,15 +59,15 @@ def update(id: int, request: schemas.Event, db: Session):
     oldSponsors = event.first().__dict__["sponsors"]
     event.update(request.__dict__)
     db.commit()
-    newSponsors = request.__dict__["sponsors"]
+    # newSponsors = request.__dict__["sponsors"]
 
-    toBeDeletedSopnsors = [x for x in oldSponsors if x not in newSponsors]
-    for item in toBeDeletedSopnsors:
-        delete_event(item, id, db)
+    # toBeDeletedSopnsors = [x for x in oldSponsors if x not in newSponsors]
+    # for item in toBeDeletedSopnsors:
+    #     delete_event(item, id, db)
 
-    toBeAddeddSopnsors = [x for x in newSponsors if x not in oldSponsors]
-    for item in toBeAddeddSopnsors:
-        add_event(item, id, db)
+    # toBeAddeddSopnsors = [x for x in newSponsors if x not in oldSponsors]
+    # for item in toBeAddeddSopnsors:
+    #     add_event(item, id, db)
 
     return 'updated'
 
