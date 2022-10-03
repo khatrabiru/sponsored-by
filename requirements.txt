@@ -8,3 +8,4 @@ requests
 pytest-asyncio
 httpx
 autopep8
+python-dotenv
