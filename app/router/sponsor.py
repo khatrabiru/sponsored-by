@@ -16,12 +16,12 @@ def create(request: schemas.Sponsor, db: Session = Depends(get_db)):
     return sponsor.create(request, db)
 
 
-@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id}')
 def delete(id: int, db: Session = Depends(get_db)):
     return sponsor.delete(id, db)
 
 
-@router.put('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.put('/{id}')
 def update(id: int, request: schemas.Sponsor, db: Session = Depends(get_db)):
     return sponsor.update(id, request, db)
 
@@ -31,6 +31,6 @@ def get(id: int, db: Session = Depends(get_db)):
     return sponsor.get(id, db)
 
 
-@router.get('/')
+@router.get('/', status_code=status.HTTP_200_OK)
 def all(db: Session = Depends(get_db)):
     return sponsor.get_all(db)

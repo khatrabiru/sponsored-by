@@ -10,7 +10,7 @@ PORT = '5432'
 DB_NAME = 'sponsoredby'
 engine = create_engine(
     f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME }")
-SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False,)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
 
 

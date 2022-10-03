@@ -56,3 +56,29 @@ def get(id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Sponsor with the id {id} is not available")
     return sponsor
+
+
+def add_event(id: int, event_id: int, db: Session):
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
+    if not sponsor.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Sponsor with id {id} not found")
+
+    sponsors = sponsor.first().events
+    sponsors.append(event_id)
+    sponsor.update({"events": sponsors}, synchronize_session=False)
+    db.commit()
+    return "done"
+
+
+def delete_event(id: int, event_id: int, db: Session):
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.id == id)
+    if not sponsor.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Sponsor with id {id} not found")
+
+    sponsors = sponsor.first().events
+    sponsors.remove(event_id)
+    sponsor.update({"events": sponsors}, synchronize_session=False)
+    db.commit()
+    return "done"

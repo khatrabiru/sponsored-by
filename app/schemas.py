@@ -12,7 +12,13 @@ class Event(BaseModel):
     location: str
     category: str
     date: Date
-    sponsors: list
+    sponsors: list[int]
+
+
+class ShowEvent(Event):
+    id: int
+    class Config():
+        orm_mode = True
 
 
 class Sponsor(BaseModel):
@@ -25,4 +31,10 @@ class Sponsor(BaseModel):
     facebook_url: str
     twitter_url: str
     instagram_url: str
-    events: list
+    events: list[int]
+
+
+class ShowSponsor(Sponsor):
+    id: int
+    class Config():
+        orm_mode = True
