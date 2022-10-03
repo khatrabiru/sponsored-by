@@ -3,6 +3,8 @@ from email.mime import base
 from pickle import NONE
 import re
 from urllib import response
+
+import py
 import pytest
 from httpx import AsyncClient
 from fastapi.testclient import TestClient
@@ -171,3 +173,62 @@ async def test_get_sponsor():
     assert response2.status_code == 200
     assert 'name' in response2.json()
     assert response2.json()['name'] == 'Sponsor1'
+
+
+
+@pytest.mark.asyncio
+async def test_delete_sponsor():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        payload = {
+                "name": "Sponsor2",
+                "image_url": "string",
+                "description": "string",
+                "short_description": "string",
+                "headquarter_location": "string",
+                "website_url": "string",
+                "facebook_url": "string",
+                "twitter_url": "string",
+                "instagram_url": "string",
+                "events": [
+                ]
+            }
+        response1 = await ac.post("/sponsor/", json=payload)
+        id = response1.json()['id']
+        response2 = await ac.delete(f'/sponsor/{id}')
+        response3 = await ac.get(f'/sponsor/{id}')
+    
+    assert response1.status_code == 201
+    assert response2.status_code == 204
+    assert response3.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_update_sponsor():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        payload = {
+                "name": "Sponsor2",
+                "image_url": "string",
+                "description": "string",
+                "short_description": "string",
+                "headquarter_location": "string",
+                "website_url": "string",
+                "facebook_url": "string",
+                "twitter_url": "string",
+                "instagram_url": "string",
+                "events": [
+                ]
+            }
+        response1 = await ac.post("/sponsor/", json=payload)
+        payload['name'] = "Sponsor3"
+        id = response1.json()['id']
+        response2 = await ac.put(f'/sponsor/{id}', json=payload)
+        response3 = await ac.get(f'/sponsor/{id}')
+    
+    assert response1.status_code == 201
+    assert response2.status_code == 204
+    assert response3.status_code == 200
+
+    assert response1.json()['name'] == 'Sponsor2'
+    assert response3.json()['name'] == "Sponsor3"
+
+    assert response1.json() != response3.json()
