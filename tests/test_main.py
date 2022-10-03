@@ -60,9 +60,12 @@ async def test_create_event():
                 "sponsors": [1, 2, 3]
             }
         )
+        response2 = await ac.get(f'/sponsor/1')
     assert response.status_code == 201
     assert response.json()['name'] == 'EventByTests123'
     assert response.json()['sponsors'] == [1, 2, 3]
+    assert response2.status_code == 200
+    assert response.json()['id'] in response2.json()['events']
 
 
 @pytest.mark.asyncio
@@ -79,16 +82,20 @@ async def test_delete_event():
                 "location": "string",
                 "category": "string",
                 "date": "2022-09-30",
-                "sponsors": [1, 2]
+                "sponsors": [1, 2, 3]
             }
         )
         id = response1.json()['id']
         response2 = await ac.delete(f'/event/{id}')
         response3 = await ac.get(f'/event/{id}')
+        response4 = await ac.get(f'/sponsor/3')
 
     assert response1.status_code == 201
     assert response2.status_code == 200
     assert response3.status_code == 404
+
+    assert response4.status_code == 200
+    assert response1.json()['id'] not in response4.json()['events']
 
 
 @pytest.mark.asyncio
@@ -122,10 +129,12 @@ async def test_update_event():
                 "location": "string",
                 "category": "string",
                 "date": "2022-09-30",
-                "sponsors": [1, 3]
+                "sponsors": [2, 3]
             }
         )
         response3 = await ac.get(url)
+        response4 = await ac.get(f'/sponsor/1')
+        response5 = await ac.get(f'/sponsor/3')
     assert response1.status_code == 201
     assert response2.status_code == 200
     assert response3.status_code == 200
@@ -136,6 +145,11 @@ async def test_update_event():
     assert response1.json()['sponsors'] != response3.json()['sponsors']
     assert len(response1.json()['sponsors']) == len(
         response3.json()['sponsors'])
+
+    assert response4.status_code == 200
+    assert response5.status_code == 200
+    assert response1.json()['id'] not in response4.json()['events']
+    assert response1.json()['id'] in response5.json()['events']
 
 
 @pytest.mark.asyncio
