@@ -31,6 +31,6 @@ def get(id: int, db: Session = Depends(get_db)):
     return sponsor.get(id, db)
 
 
-@router.get('/', status_code=status.HTTP_200_OK)
+@router.get('s', status_code=status.HTTP_200_OK)
 def all(db: Session = Depends(get_db)):
     return sponsor.get_all(db)

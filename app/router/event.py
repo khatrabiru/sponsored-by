@@ -54,6 +54,6 @@ def get(id: int, db: Session = Depends(get_db)):
     return event.get(id, db)
 
 
-@router.get('/')
+@router.get('s')
 def all(db: Session = Depends(get_db)):
     return event.get_all(db)
